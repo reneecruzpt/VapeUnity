@@ -1,0 +1,42 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    VapeUnity.Controllers.GlobalVariables.Email = User.Identity.Name;
+}
+@{
+    var hasExistingCliente = ViewBag.HasExistingCliente ?? false;
+}
+@model Clientes
+<head>
+    <link rel="stylesheet" href="~/css/style2.css">
+</head>
+<h1>Área do Cliente</h1>
+
+@if (Model != null)
+{
+    <div class="areaCliente">
+        <p class="d-none">Id: @Model.Id</p>
+        <p>Nome: @Model.Nome</p>
+        <p>Apelido: @Model.Apelido</p>
+        <p>Morada: @Model.Morada</p>
+        <p>Nif: @Model.Nif</p>
+        <p>Telefone: @Model.Telefone</p>
+        <p>Email: @Model.Email</p>
+        <p class="d-none">UserId: @Model.UserId</p>
+    </div>
+}
+
+<p>
+    @if (!hasExistingCliente)
+    {
+    <p>Parece que ainda não tens dados no teu registo, completa-o para aceder mais funcionalidades.</p>
+    <a asp-action="CreateCliente" asp-route-id="">Create Cliente</a>
+    }
+    else
+    {
+    <a asp-action="EditClientesByEmail">Modificar Dados</a>
+    <br />
+    <a asp-action="AreaEncomendas">Area Encomendas</a>
+    }
+</p>

@@ -1,0 +1,191 @@
+﻿@model IEnumerable<VapeUnity.Models.Produtos>
+
+<head>
+	<link rel="stylesheet" href="~/css/style2.css">
+	
+</head>
+
+<body>
+	<div class="vape">
+		<span>P</span><span>R</span><span>O</span><span>D</span><span>U</span><span>T</span><span>O</span><span>S</span>
+	</div>
+
+	@foreach (var item in Model)
+	{
+		<div class="caixa2">
+			<p>Nome do Produto: @Html.DisplayFor(modelItem => item.Nome)</p>
+			<div class="mensagem">
+			</div>
+			<span id="limited">@Html.DisplayFor(modelItem => item.Descricao)</span>
+
+			@if (item.Descricao.Length > 200)
+			{
+				<a class="verMais" data-descricao="@Html.DisplayFor(modelItem => item.Descricao)">Ver Mais</a>
+			}
+			<div id="mensagemCompleta" class="mensagem-completa">
+				<div class="fechar">X</div>
+				<div>
+					<p class="description">@Html.DisplayFor(modelItem => item.Descricao)</p>
+				</div>
+			</div>
+			<p>Preco: @Html.DisplayFor(modelItem => item.Preco)</p>
+			<p>Categoria: @Html.DisplayFor(modelItem => item.Categoria)</p>
+
+            <div class="row justify-content-center">
+                <div class="col text-center">
+                    <p>Disponível em estoque?</p>
+                </div>
+                <div class="col text-center">
+                    <div class="d-flex align-items-center">
+                        @if (item.Disponibilidade)
+                        {
+                            <input style="pointer-events: none;" type="checkbox" name="disponibilidade" value="1" checked="checked" />
+                            <p>Sim</p>
+                        }
+                        else
+                        {
+                            <input type="checkbox" name="disponibilidade" value="1" />
+                            <p>Nao</p>
+                        }
+                    </div>
+                </div>
+            </div>
+
+
+
+			<img src="@Url.Content(item.CaminhoImagens)" width="150" height="200">
+			<form method="post" action="/Carrinho/AdicionarAoCarrinho">
+				<input type="hidden" name="produtoId" value="@item.Id" />
+				<input type="hidden" name="produtoNome" value="@item.Nome" />
+				<input type="hidden" name="produtoPreco" value="@item.Preco" />
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label for="quantidade">Quantidade:</label>
+                    </div>
+                    <div class="col-sm-3">
+                        <input class="form-control" type="number" name="quantidade" value="1" min="1" />
+                    </div>
+                </div>
+				<input type="submit" value="Adicionar ao Carrinho" />
+			</form>
+		</div>
+	}
+	<div class='light x1'></div>
+	<div class='light x2'></div>
+	<div class='light x3'></div>
+	<div class='light x4'></div>
+	<div class='light x5'></div>
+	<div class='light x6'></div>
+	<div class='light x7'></div>
+	<div class='light x8'></div>
+	<div class='light x9'></div>
+
+</body>
+
+<script>
+
+    function atualizarMensagem(checkbox) {
+    var mensagemElemento = document.getElementById("mensagemDisponibilidade");
+    if (checkbox.checked) {
+      mensagemElemento.textContent = "Sim";
+    } else {
+      mensagemElemento.textContent = "Não";
+    }
+  }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var verMaisBtns = document.querySelectorAll('.verMais');
+
+        verMaisBtns.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                btn.style.backgroundColor = "pink";
+
+                var mensagemCompleta = btn.nextElementSibling;
+                var fechar = mensagemCompleta.querySelector('.fechar');
+                var description = mensagemCompleta.querySelector('.description');
+                var mensagem = mensagemCompleta.querySelector('p');
+
+                description.style = "color:black";
+
+                var descricao = btn.getAttribute('data-descricao');
+
+                mensagem.innerHTML = descricao;
+
+                mensagemCompleta.style.display = "block";
+
+                fechar.addEventListener('click', function () {
+                    mensagemCompleta.style.display = "none";
+                });
+            });
+        });
+
+        var limitedFields = document.querySelectorAll('#limited');
+
+        limitedFields.forEach(function (field) {
+            var lineHeight = parseFloat(getComputedStyle(field).lineHeight);
+            var lineLimit = 4;
+            var maxCharactersPerLine = 50;
+            var maxTotalCharacters = lineLimit * maxCharactersPerLine;
+
+            var text = field.textContent.trim();
+            var words = text.split(' ');
+            var lines = [];
+            var line = '';
+            var lineCount = 0;
+
+            for (var i = 0; i < words.length; i++) {
+                var word = words[i];
+
+                if (line.length + word.length <= maxCharactersPerLine) {
+                    line += word + ' ';
+                } else {
+                    if (lineCount === lineLimit - 1) {
+                        var remainingCharacters = maxCharactersPerLine - line.length;
+                        var remainingWords = words.slice(i);
+                        var nextLine = '';
+
+                        for (var j = 0; j < remainingWords.length; j++) {
+                            var nextWord = remainingWords[j];
+
+                            if (nextLine.length + nextWord.length <= remainingCharacters) {
+                                nextLine += nextWord + ' ';
+                                i++;
+                            } else {
+                                break;
+                            }
+                        }
+
+                        lines.push(line.trim());
+                        lines.push(nextLine.trim());
+                        lineCount += 2;
+                        break;
+                    } else {
+                        lines.push(line.trim());
+                        line = word + ' ';
+                        lineCount++;
+                    }
+                }
+            }
+
+            if (line.length > 0 && lineCount < lineLimit) {
+                lines.push(line.trim());
+            }
+
+            var formattedText = lines.join('<br>');
+
+            field.innerHTML = formattedText;
+
+            if (text.length > maxTotalCharacters) {
+                field.insertAdjacentHTML('beforeend', '...');
+            }
+
+            // Verifica se o texto tem 4 linhas ou menos e adiciona uma linha em branco
+            if (lineCount <= lineLimit) {
+                field.insertAdjacentHTML('beforeend', '<br><br>');
+            }
+
+            field.style.marginBottom = lineHeight + 'px';
+        });
+    });
+
+</script>

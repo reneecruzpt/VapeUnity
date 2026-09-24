@@ -1,0 +1,81 @@
+﻿@model VapeUnity.Models.Produtos
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Produtos</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Nome" class="control-label"></label>
+                <input asp-for="Nome" class="form-control" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descricao" class="control-label"></label>
+                <input asp-for="Descricao" class="form-control" />
+                <span asp-validation-for="Descricao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Preco" class="control-label"></label>
+                <input asp-for="Preco" class="form-control" />
+                <span asp-validation-for="Preco" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Categoria" class="control-label"></label>
+                <input asp-for="Categoria" class="form-control" />
+                <span asp-validation-for="Categoria" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Disponibilidade" class="control-label"></label>
+                <input asp-for="Disponibilidade" class="form-control" />
+                <span asp-validation-for="Disponibilidade" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CaminhoImagens" class="control-label"></label>
+                <input asp-for="CaminhoImagens" id="x" class="form-control" />
+                <span asp-validation-for="CaminhoImagens" class="text-danger"></span>
+            </div>
+            <div class="col-md-8">
+                <iframe id="uploadFrame" src="@Url.Action("Upload", "Imagens")" style="width:300px;height:80px;"></iframe>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+<script>
+    // função que atualiza o valor do campo de texto
+    function atualizarCampoTexto() {
+        // faz uma requisição ao controlador para obter o novo valor
+        fetch('/Produtos2/AtualizarCampoTexto')
+            .then(response => response.json())
+            .then(data => {
+                if (data.sucesso) {
+                    // atualiza o valor do campo com o novo valor obtido
+                    document.getElementById('x').value = data.valor;
+                }
+            });
+    }
+    // chama a função a cada intervalo de tempo definido
+    setInterval(atualizarCampoTexto, 1000);
+</script>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

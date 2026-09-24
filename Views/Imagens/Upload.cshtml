@@ -1,0 +1,16 @@
+﻿@{
+    Layout = null;
+}
+
+<form id="form-imagem" action="/Imagens/Upload" method="post" enctype="multipart/form-data">
+    <label> Escolha a sua imagem para upload:</label>
+    <input id="input-imagem" type="file" name="foto" />
+    <br />
+    <!--<button type="submit" class="btn btn-danger">Enviar a imagem</button>-->
+</form>
+
+<script>
+    document.getElementById("input-imagem").addEventListener("change", async function () {
+        await document.getElementById("form-imagem").submit();
+    });
+</script>

@@ -1,0 +1,124 @@
+﻿@model Clientes
+
+@{
+    List<Clientes> clientes = (List<Clientes>)ViewData["Clientes"];
+    VapeUnity.Controllers.GlobalVariables.Email = User.Identity.Name;
+}
+
+@{
+    ViewData["Title"] = "Edit Clientes";
+}
+
+<head>
+    <title>Sua Página</title>
+    <style>
+        .fade-out {
+            opacity: 0;
+            transition: opacity 1s ease-out;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <h1>Edit Clientes</h1>
+
+    <!-- Se houver mensagens de erro gerais -->
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            <ul>
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
+
+    <!-- Agora você pode usar a lista de clientes e seus campos como quiser -->
+    @foreach (var cliente in clientes)
+    {
+        <!--<p>@cliente.Nome</p>
+        <p>@cliente.Apelido</p>
+        <p>@cliente.Nif</p>
+        <p>@cliente.Morada</p>
+        <p>@cliente.Telefone</p>
+        <p>@cliente.Email</p>-->
+
+        <form asp-action="EditClientesByEmail" method="post">
+            <div class="text-danger"></div>
+            <input type="hidden" asp-for="Id" value="@cliente.Id" />
+            <div class="form-group">
+                <label asp-for="Nome" class="control-label">Nome</label>
+                <input type="text" asp-for="Nome" class="form-control" value="@cliente.Nome" />
+                <span class="text-danger">
+                    @Html.ValidationMessageFor(model => model.Nome)
+                </span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Apelido" class="control-label">Apelido</label>
+                <input type="text" asp-for="Apelido" class="form-control" value="@cliente.Apelido" />
+                <span class="text-danger">
+                    @Html.ValidationMessageFor(model => model.Apelido)
+                </span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Morada" class="control-label">Morada</label>
+                <input type="text" asp-for="Morada" class="form-control" value="@cliente.Morada" />
+                <span class="text-danger">
+                    @Html.ValidationMessageFor(model => model.Morada)
+                </span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nif" class="control-label">Nif</label>
+                <input type="text" asp-for="Nif" class="form-control" value="@cliente.Nif" minlength="9" pattern="[0-9]{9}" />
+                <span class="text-danger">
+                    @Html.ValidationMessageFor(model => model.Nif)
+                </span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Telefone" class="control-label">Telefone</label>
+                <input type="text" asp-for="Telefone" class="form-control" value="@cliente.Telefone" minlength="9" maxlength="9" pattern="[0-9]{9}" />
+                <span class="text-danger">
+                    @Html.ValidationMessageFor(model => model.Telefone)
+                </span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+
+    }
+    <a href="/clientes/AreaCliente" class="btn btn-secondary">Voltar para Área do Cliente</a>
+
+
+    @if (TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["MensagemSucesso"]
+        </div>
+    }
+
+    @if (TempData["MensagemFalha"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["MensagemFalha"]
+        </div>
+    }
+
+    <script>
+        // Encontra a div da mensagem de sucesso
+        var successMessage = document.querySelector('.alert-success');
+
+        // Verifica se a div da mensagem de sucesso existe
+        if (successMessage) {
+            // Define um temporizador para ocultar a div após 5 segundos
+            setTimeout(function () {
+                // Adiciona a classe 'fade-out' à div para aplicar o efeito fade-out
+                successMessage.classList.add('fade-out');
+            }, 5000); // 5000 milissegundos = 5 segundos
+        }
+    </script>
+</body>

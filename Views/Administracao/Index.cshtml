@@ -1,0 +1,201 @@
+﻿@{
+    Layout = "LayoutVazio";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - VapeUnity</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .nav-vertical {
+            flex-direction: column;
+        }
+
+            .nav-vertical .nav-link {
+                padding: 0.5rem 1rem;
+            }
+
+                .nav-vertical .nav-link:hover,
+                .nav-vertical .nav-link:focus {
+                    background-color: #f8f9fa;
+                    color: #000;
+                }
+
+        .container {
+            margin: 0;
+            height: 100%;
+            width: 100%;
+            padding: 0;
+            border: 0;
+            margin: 0;
+        }
+        .area{
+            margin: 0;
+            height: 100%;
+            display: flex;
+            width: 100%;
+        }
+
+        .row {
+            margin: 0;
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        #iframe-container {
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            margin: 0;
+        }
+
+        #iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .nav-vertical {
+            flex-direction: column;
+        }
+
+            .nav-vertical .nav-link {
+                padding: 0.5rem 1rem;
+            }
+
+                .nav-vertical .nav-link:hover,
+                .nav-vertical .nav-link:focus {
+                    background-color: #f8f9fa;
+                    color: #000;
+                }
+
+
+    </style>
+</head>
+<body style="height: 2000px">
+    <img src="~/imagens/ICON.jpg" width="50px" height="50px" />
+
+    <div class="area">
+        <div class="row">
+            <div class="col-md-2" style="width: 20%">
+                <header>
+                    <nav class="navbar navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                        <div class="container-fluid">
+                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">VapeUnity</a>
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                    aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                                <ul class="navbar-nav flex-column nav-vertical">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Produtos2" asp-action="Lista">Produtos Cadastrados</a>
+                                    </li>
+                                    @if (User?.Identity?.IsAuthenticated ?? false)
+                                    {
+                                        @if (User.IsInRole("Admin"))
+                                        {
+                                            <li class="nav-item">
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Produtos2" asp-action="Index">Controle Produtos</a>
+                                            </li>
+                                        }
+                                    }
+                                    @if (User?.Identity?.IsAuthenticated ?? false)
+                                    {
+                                        @if (User.IsInRole("Admin"))
+                                        {
+                                            <li class="nav-item">
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Stock" asp-action="Index">Contnrole Stock</a>
+                                            </li>
+                                        }
+                                    }
+                                    @if (User?.Identity?.IsAuthenticated ?? false)
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Clientes" asp-action="Index">Controle Clientes</a>
+                                        </li>
+                                    }
+
+                                    @if (User?.Identity?.IsAuthenticated ?? false)
+                                    {
+                                        @if (User.IsInRole("Admin"))
+                                        {
+                                            <li class="nav-item">
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Faturas" asp-action="Index">Controle Faturas</a>
+                                            </li>
+
+                                            <li class="nav-item">
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Fatura_Detalhes" asp-action="Index">Faturas Detalhadas</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Fornecedores" asp-action="Index">Controle Fornecedores</a>
+                                            </li>
+                                        }
+                                    }
+                                    @if (User?.Identity?.IsAuthenticated ?? false)
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Clientes" asp-action="AreaCliente">Area do Cliente</a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a class=" text-dark" asp-area="Identity" asp-page="/Account/Logout">Logout</a>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Registo</a>
+                                        </li>
+                                    }
+
+                                    @if (User?.Identity?.IsAuthenticated ?? false)
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Administracao" asp-action="GVariables">Gbl Var</a>
+                                        </li>
+                                    }
+
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </header>
+            </div>
+            <div class="col-md-10" style="width: 100%">
+                <div id="iframe-container"></div>
+            </div>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        // Função para verificar a autenticação
+        function verificarAutenticacao() {
+            $.get("/Administracao/VerificarAutenticacao", function (data) {
+                if (!data.autenticado) {
+                    console.log("Usuário não autenticado. Redirecionando para a página de logout.");
+                    window.location.href = "/Identity/Account/Logout";
+                }
+
+            });
+        }
+
+
+        $(document).ready(function () {
+            $('.nav-link').on('click', function (e) {
+                e.preventDefault();
+                var url = $(this).attr('href');
+                $('#iframe-container').html('<iframe src="' + url + '"></iframe>');
+            });
+        });
+    </script>
+</body>
+</html>

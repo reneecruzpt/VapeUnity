@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <link rel="stylesheet" href="~/css/style2.css">
+</head>
+<body>
+    <h1>Contato</h1>
+
+    <form method="post" action='mailto:vapeunity@vapers.pt'>
+        <fieldset>
+            <label for="first-name">Nome: <input id="first-name" name="first-name" type="text" required /></label>
+            <label for="last-name">Apelido: <input id="last-name" name="last-name" type="text" required /></label>
+            <label for="email">Email: <input id="email" name="email" type="email" required /></label>
+        </fieldset>
+        <fieldset>
+            <label for="referrer">
+                Como soube do nosso site?
+                <select id="referrer" name="referrer">
+                    <option value="">(selecione um)</option>
+                    <option value="1">Amigos</option>
+                    <option value="2">Internet</option>
+                    <option value="3">Publicidade</option>
+                    <option value="4">Outro</option>
+                </select>
+            </label>
+            <label for="coment">
+                Deixe um comentário:
+                <textarea id="coment" name="coment" rows="3" cols="30" placeholder="Deixe comentário..."></textarea>
+            </label>
+        </fieldset>
+        <fieldset>
+            <div class="d-flex justify-content-center align-items-center">
+                <label for="news-letter"><input id="news-letter" type="radio" name="account-type" class="inline" /> News letter</label>
+                <label for="terms-and-conditions">
+                    <input id="terms-and-conditions" type="checkbox" required name="terms-and-conditions" class="inline" /> Eu li e aceito os <a href="https://www.google.com">termos e condições</a>
+                </label>
+            </div>
+        </fieldset>
+        <input type="submit" value="Submit" />
+    </form>
+
+    <div class='light x1'></div>
+    <div class='light x2'></div>
+    <div class='light x3'></div>
+    <div class='light x4'></div>
+    <div class='light x5'></div>
+    <div class='light x6'></div>
+    <div class='light x7'></div>
+    <div class='light x8'></div>
+    <div class='light x9'></div>
+</body>
+</html>

@@ -1,0 +1,115 @@
+﻿@model IEnumerable<VapeUnity.Models.Encomendas>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Cliente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MoradaEntrega)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ValorPorItem)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ValorTotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PagamentoRealizado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataEncomenda)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataEntrega)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Observacoes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MetodoPagamento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QuantidadeItens)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ValorDesconto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ValorEnvio)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cliente.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MoradaEntrega)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValorPorItem)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValorTotal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PagamentoRealizado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataEncomenda)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataEntrega)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Observacoes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MetodoPagamento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuantidadeItens)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValorDesconto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValorEnvio)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</body>
+</html>

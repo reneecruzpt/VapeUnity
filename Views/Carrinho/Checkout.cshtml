@@ -1,0 +1,31 @@
+﻿@model VapeUnity.Models.CheckoutViewModel
+
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+@if (Model == null)
+{
+    <h2>Checkout</h2>
+    <p>Os campos necessários para finalizar o checkout estão vazios por favor preencha os campos necessários.</p>
+    <a asp-action="Carrinho">Voltar para o Carrinho</a>
+}
+else
+{
+    <h2>Checkout</h2>
+
+    <form method="post" action="/Carrinho/FinalizarCompra">
+        <h3>Checkout</h3>
+
+        <!-- Campos da encomenda -->
+        <input type="hidden" name="clienteId" value="@Model.ClienteId" />
+        <input type="text" name="moradaEntrega" value="@Model.MoradaEntrega" required />
+        <!-- Outros campos da encomenda -->
+        <!-- Campos da fatura -->
+        <input type="hidden" name="idCliente" value="@Model.Id_Cliente" />
+        <input type="text" name="total" value="@Model.Total" required />
+        <!-- Outros campos da fatura -->
+
+        <button type="submit">Finalizar Compra</button>
+    </form>
+}

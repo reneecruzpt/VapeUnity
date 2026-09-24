@@ -1,0 +1,158 @@
+﻿@model List<VapeUnity.Models.Produtos>
+
+@{
+    ViewData["Title"] = "Carrinho de Compras";
+}
+<head>
+    <link rel="stylesheet" href="~/css/style2.css">
+    <style>
+        .hidden {
+            display: none;
+        }
+
+    </style>
+</head>
+<h2>Carrinho de Compras</h2>
+
+@if (Model != null && Model.Count > 0)
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Preço</th>
+                <th>Quantidade</th>
+                <th>Total</th>
+                <th>Ações</th> <!-- Nova coluna para os botões "Remover" -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var produto in Model)
+            {
+                <tr>
+                    <td>@produto.Nome</td>
+                    <td>@produto.Preco</td>
+                    <td>
+                        <form method="post" action="/Carrinho/AtualizarQuantidade">
+                            <input type="hidden" name="produtoId" value="@produto.Id" />
+                            <input type="hidden" name="produtoNome" value="@produto.Nome" />
+                            <input type="hidden" name="produtoPreco" value="@produto.Preco" />
+                            <input type="number" name="quantidade" value="@produto.Quantidade" min="1" max="999" />
+                            <button type="submit">Atualizar</button>
+                        </form>
+                    </td>
+                    <td>@(decimal.Parse(produto.Preco.Replace(".", ",")) * produto.Quantidade)</td>
+                    <td>
+                        <form method="post" action="/Carrinho/RemoverDoCarrinho">
+                            <input type="hidden" name="produtoId" value="@produto.Id" />
+                            <button type="submit">Remover</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <p>Total do Carrinho: @ViewBag.PrecoTotal</p>
+
+
+    <a href="/Produtos2/Lista">Voltar para os produtos</a>
+    <br />
+
+    <a href="/Carrinho/Checkout">Finalizar Compra</a>
+}
+else
+{
+    <p>O carrinho está vazio.</p>
+}
+
+@if (!User.Identity.IsAuthenticated)
+{
+    <h3 class="fast-checkout-title">Fast Checkout</h3>
+    <form method="post" action="/Carrinho/FastCheckout" class="fast-checkout-form hidden">
+        <div class="form-group row">
+            <label for="formaPagamento" class="col-sm-3 col-form-label">Forma de Pagamento:</label>
+            <div class="col-sm-2">
+                <select class="form-control" name="formaPagamento" id="formaPagamento">
+                    <option value="cartao">Cartão de Crédito</option>
+                    <option value="boleto">Boleto Bancário</option>
+                    <option value="transferencia">Transferência Bancária</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="nomeRua" class="col-sm-3 col-form-label">Nome da Rua/Avenida:</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" name="nomeRua" id="nomeRua" required>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="numero" class="col-sm-3 col-form-label">Número:</label>
+            <div class="col-sm-1">
+                <input type="text" class="form-control" name="numero" id="numero" required>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="localidade" class="col-sm-3 col-form-label">Localidade:</label>
+            <div class="col-sm-2">
+                <input list="localidades" class="form-control" name="localidade" id="localidade" required>
+                <datalist id="localidades">
+                    <option value="Aveiro">Aveiro</option>
+                    <option value="Açores">Açores</option>
+                    <option value="Beja">Beja</option>
+                    <option value="Braga">Braga</option>
+                    <option value="Bragança">Bragança</option>
+                    <option value="Castelo Branco">Castelo Branco</option>
+                    <option value="Coimbra">Coimbra</option>
+                    <option value="Évora">Évora</option>
+                    <option value="Faro">Faro</option>
+                    <option value="Guarda">Guarda</option>
+                    <option value="Leiria">Leiria</option>
+                    <option value="Lisboa">Lisboa</option>
+                    <option value="Madeira">Madeira</option>
+                    <option value="Portalegre">Portalegre</option>
+                    <option value="Porto">Porto</option>
+                    <option value="Santarém">Santarém</option>
+                    <option value="Setúbal">Setúbal</option>
+                    <option value="Viana do Castelo">Viana do Castelo</option>
+                    <option value="Vila Real">Vila Real</option>
+                    <option value="Viseu">Viseu</option>
+                </datalist>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="freguesia" class="col-sm-3 col-form-label">Freguesia:</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" name="freguesia" id="freguesia" required>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="codigoPostal" class="col-sm-3 col-form-label">Código Postal:</label>
+            <div class="col-sm-1">
+                <input type="text" class="form-control" name="codigoPostal" id="codigoPostal" required>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-primary">Finalizar Compra</button>
+            </div>
+        </div>
+    </form>
+}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var title = document.querySelector('.fast-checkout-title');
+        var form = document.querySelector('.fast-checkout-form');
+
+        title.addEventListener('click', function () {
+            form.classList.toggle('hidden');
+        });
+    });
+</script>

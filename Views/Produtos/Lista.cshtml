@@ -1,0 +1,57 @@
+﻿@model IEnumerable<VapeUnity.Models.Produtos>
+
+@{
+    ViewData["Title"] = "Lista";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/style.css">
+</head>
+
+<div class="vape">
+    <span>P</span>
+    <span>R</span>
+    <span>O</span>
+    <span>D</span>
+    <span>U</span>
+    <span>T</span>
+    <span>O</span>
+    <span>S</span>
+</div>
+
+
+
+<body>
+
+    @{
+        string[] imagens = new string[20];
+        imagens[1] = "~/imagens/ragnarok.jpg";
+        imagens[2] = "~/imagens/donCristo.png";
+        imagens[3] = "~/imagens/cherry.jpg";
+        imagens[4] = "~/imagens/prestige3.jpg";
+        imagens[5] = "~/imagens/prestige4.jpg";
+        imagens[6] = "~/imagens/ammit.jpg";
+        imagens[7] = "~/imagens/bishop.jpg";
+        imagens[8] = "~/imagens/vvRequiem.jpg";
+        imagens[9] = "~/imagens/vvBerserker.jpg";
+        imagens[10] = "~/imagens/pulseKit.jpg";
+        imagens[11] = "~/imagens/lostVapeMini.jpg";
+        imagens[12] = "~/imagens/kitCyborgue.jpg";
+    }
+
+@foreach (var item in Model) {
+
+        <div class="caixa">
+            <p>Nome do Produto: @Html.DisplayFor(modelItem => item.Nome)</p>
+            <p>Descricao: @Html.DisplayFor(modelItem => item.Descricao)</p>
+            <p>Preco: @Html.DisplayFor(modelItem => item.Preco)</p>
+            <p>Categoria: @Html.DisplayFor(modelItem => item.Categoria)</p>
+            <p>Disponibilidade: @Html.DisplayFor(modelItem => item.Disponibilidade)</p>
+            <img src="@Url.Content(imagens[item.Id])" width="150" height="200">
+            <hr>
+        
+        </div>
+}
+
+</body>
+

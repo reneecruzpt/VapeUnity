@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Search Address";
+}
+
+<h2>Search Address</h2>
+
+<form method="post" asp-action="Search">
+    <div class="form-group">
+        <label for="streetName">Street Name:</label>
+        <input type="text" id="streetName" name="streetName" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>

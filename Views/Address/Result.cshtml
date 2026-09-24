@@ -1,0 +1,17 @@
+﻿@using VapeUnity.Services
+@model AddressResult
+
+@{
+    ViewData["Title"] = "Search Result";
+}
+
+<h2>Search Result</h2>
+
+<h4>Formatted Address:</h4>
+<p>@Model.FormattedAddress</p>
+
+<h4>Location:</h4>
+<p>Latitude: @Model.Lat</p>
+<p>Longitude: @Model.Lng</p>
+
+<a asp-action="Index" class="btn btn-primary">Back to Search</a>
